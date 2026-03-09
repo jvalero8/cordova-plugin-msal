@@ -84,7 +84,7 @@ public class MsalPlugin extends CordovaPlugin {
         super.initialize(cordova, webView);
         activity = cordova.getActivity();
         context = webView.getContext();
-        keyHash = this.preferences.getString("keyHash","");
+        keyHash = this.preferences.getString("KEY_HASH","");
     }
 
     @Override
