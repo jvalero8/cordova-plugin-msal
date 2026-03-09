@@ -258,7 +258,9 @@ public class MsalPlugin extends CordovaPlugin {
                         }
                         MsalPlugin.this.scopes = scopes.toArray(new String[0]);
                         MsalPlugin.this.isInit = true;
-                        MsalPlugin.this.callbackContext.success();
+                        JSONObject dbgData = new JSONObject();
+                        dbgData.put("redirectURI", "msauth://" + MsalPlugin.this.activity.getApplicationContext().getPackageName() + "/" + keyHashUrlFriendly);
+                        MsalPlugin.this.callbackContext.success(dbgData);
                     } catch (JSONException ignored) {}
                 } catch (InterruptedException | MsalException e) {
                     MsalPlugin.this.callbackContext.error(e.getMessage());
