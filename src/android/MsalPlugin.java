@@ -258,10 +258,7 @@ public class MsalPlugin extends CordovaPlugin {
                         }
                         MsalPlugin.this.scopes = scopes.toArray(new String[0]);
                         MsalPlugin.this.isInit = true;
-                        JSONObject dbgData = new JSONObject();
-                        dbgData.put("redirectURI", MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri());
-                        String serializedDbgData = dbgData.toString();
-                        MsalPlugin.this.callbackContext.success(serializedDbgData);
+                        MsalPlugin.this.callbackContext.success();
                     } catch (JSONException ignored) {}
                 } catch (InterruptedException | MsalException e) {
                     MsalPlugin.this.callbackContext.error(e.getMessage());
@@ -348,6 +345,10 @@ public class MsalPlugin extends CordovaPlugin {
                     public void run() {
                         try {
                             String authority = MsalPlugin.this.appSingleClient.getConfiguration().getDefaultAuthority().getAuthorityURL().toString();
+                            JSONObject debugData = new JSONObject();
+                            debugData.put("Used redirect URI", MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri());
+                            debugData.put("Expected redirect URI", MsalPlugin.this.appSingleClient.showExpectedMsalRedirectUriInfo(MsalPlugin.this.activity));
+                            String debugDataString = debugData.toString();
                             if (MsalPlugin.this.appSingleClient.getCurrentAccount().getCurrentAccount() == null) {
                                 MsalPlugin.this.callbackContext.error("No account currently exists");
                             } else {
@@ -363,16 +364,16 @@ public class MsalPlugin extends CordovaPlugin {
 
                                             @Override
                                             public void onError(MsalException exception) {
-                                                MsalPlugin.this.callbackContext.error(exception.getMessage());
+                                                MsalPlugin.this.callbackContext.error(debugDataString + ". " + exception.getMessage());
                                             }
                                         })
                                         .build();
                                 MsalPlugin.this.appSingleClient.acquireTokenSilentAsync(params);
                             }
                         } catch (InterruptedException e) {
-                            MsalPlugin.this.callbackContext.error(e.getMessage());
+                            MsalPlugin.this.callbackContext.error(debugDataString + ". " + e.getMessage());
                         } catch (MsalException e) {
-                            MsalPlugin.this.callbackContext.error(e.getMessage());
+                            MsalPlugin.this.callbackContext.error(debugDataString + ". " + e.getMessage());
                         }
                     }
                 });
