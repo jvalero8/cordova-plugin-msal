@@ -345,9 +345,7 @@ public class MsalPlugin extends CordovaPlugin {
                     public void run() {
                         try {
                             String authority = MsalPlugin.this.appSingleClient.getConfiguration().getDefaultAuthority().getAuthorityURL().toString();
-                            JSONObject debugData = new JSONObject();
-                            debugData.put("Used redirect URI", MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri());
-                            String debugDataString = debugData.toString();
+
                             if (MsalPlugin.this.appSingleClient.getCurrentAccount().getCurrentAccount() == null) {
                                 MsalPlugin.this.callbackContext.error("No account currently exists");
                             } else {
@@ -363,6 +361,9 @@ public class MsalPlugin extends CordovaPlugin {
 
                                             @Override
                                             public void onError(MsalException exception) {
+                                                JSONObject debugData = new JSONObject();
+                                                debugData.put("Used redirect URI", MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri());
+                                                String debugDataString = debugData.toString();
                                                 MsalPlugin.this.callbackContext.error(debugDataString + ". " + exception.getMessage());
                                             }
                                         })
@@ -370,8 +371,14 @@ public class MsalPlugin extends CordovaPlugin {
                                 MsalPlugin.this.appSingleClient.acquireTokenSilentAsync(params);
                             }
                         } catch (InterruptedException e) {
+                            JSONObject debugData = new JSONObject();
+                            debugData.put("Used redirect URI", MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri());
+                            String debugDataString = debugData.toString();
                             MsalPlugin.this.callbackContext.error(debugDataString + ". " + e.getMessage());
                         } catch (MsalException e) {
+                            JSONObject debugData = new JSONObject();
+                            debugData.put("Used redirect URI", MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri());
+                            String debugDataString = debugData.toString();
                             MsalPlugin.this.callbackContext.error(debugDataString + ". " + e.getMessage());
                         }
                     }
