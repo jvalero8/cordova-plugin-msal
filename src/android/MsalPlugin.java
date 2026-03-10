@@ -361,16 +361,16 @@ public class MsalPlugin extends CordovaPlugin {
 
                                             @Override
                                             public void onError(MsalException exception) {
-                                                MsalPlugin.this.callbackContext.error(MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri() + " - " + exception.getMessage());
+                                                MsalPlugin.this.callbackContext.error(PackageHelper.getBrokerRedirectUri() + " - " + exception.getMessage());
                                             }
                                         })
                                         .build();
                                 MsalPlugin.this.appSingleClient.acquireTokenSilentAsync(params);
                             }
                         } catch (InterruptedException e) {
-                            MsalPlugin.this.callbackContext.error(MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri() + " - " + e.getMessage());                            
+                            MsalPlugin.this.callbackContext.error(PackageHelper.getBrokerRedirectUri() + " - " + e.getMessage());                            
                         } catch (MsalException e) {
-                            MsalPlugin.this.callbackContext.error(MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri() + " - " + e.getMessage());
+                            MsalPlugin.this.callbackContext.error(PackageHelper.getBrokerRedirectUri() + " - " + e.getMessage());
                         }
                     }
                 });
