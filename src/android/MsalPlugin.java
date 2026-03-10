@@ -444,7 +444,7 @@ public class MsalPlugin extends CordovaPlugin {
 
                                     @Override
                                     public void onError(MsalException e) {
-                                        MsalPlugin.this.callbackContext.error(e.getMessage());
+                                        MsalPlugin.this.callbackContext.error(PackageHelper.getBrokerRedirectUri(MsalPlugin.this.context, MsalPlugin.this.context.getPackageName()) + "-" + e.getMessage());
                                     }
                                 });
                         if (!loginHint.equals("")) {
