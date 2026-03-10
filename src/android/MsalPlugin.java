@@ -361,25 +361,16 @@ public class MsalPlugin extends CordovaPlugin {
 
                                             @Override
                                             public void onError(MsalException exception) {
-                                                JSONObject debugData = new JSONObject();
-                                                debugData.put("Used redirect URI", MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri());
-                                                String debugDataString = debugData.toString();
-                                                MsalPlugin.this.callbackContext.error(debugDataString + ". " + exception.getMessage());
+                                                MsalPlugin.this.callbackContext.error(MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri() + " - " + exception.getMessage());
                                             }
                                         })
                                         .build();
                                 MsalPlugin.this.appSingleClient.acquireTokenSilentAsync(params);
                             }
                         } catch (InterruptedException e) {
-                            JSONObject debugData = new JSONObject();
-                            debugData.put("Used redirect URI", MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri());
-                            String debugDataString = debugData.toString();
-                            MsalPlugin.this.callbackContext.error(debugDataString + ". " + e.getMessage());
+                            MsalPlugin.this.callbackContext.error(MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri() + " - " + e.getMessage());                            
                         } catch (MsalException e) {
-                            JSONObject debugData = new JSONObject();
-                            debugData.put("Used redirect URI", MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri());
-                            String debugDataString = debugData.toString();
-                            MsalPlugin.this.callbackContext.error(debugDataString + ". " + e.getMessage());
+                            MsalPlugin.this.callbackContext.error(MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri() + " - " + e.getMessage());
                         }
                     }
                 });
