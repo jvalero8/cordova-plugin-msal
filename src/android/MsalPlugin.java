@@ -347,7 +347,6 @@ public class MsalPlugin extends CordovaPlugin {
                             String authority = MsalPlugin.this.appSingleClient.getConfiguration().getDefaultAuthority().getAuthorityURL().toString();
                             JSONObject debugData = new JSONObject();
                             debugData.put("Used redirect URI", MsalPlugin.this.appSingleClient.getConfiguration().getRedirectUri());
-                            debugData.put("Expected redirect URI", MsalPlugin.this.appSingleClient.showExpectedMsalRedirectUriInfo(MsalPlugin.this.activity));
                             String debugDataString = debugData.toString();
                             if (MsalPlugin.this.appSingleClient.getCurrentAccount().getCurrentAccount() == null) {
                                 MsalPlugin.this.callbackContext.error("No account currently exists");
